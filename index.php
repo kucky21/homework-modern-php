@@ -1,16 +1,10 @@
 <?php
-//list for store messages
-$list=[ "error"=>0,
-        "warning"=>0,
-        "notice"=>0,
-        "info"=>0,
-        "emergency"=>0,
-        "alert"=>0,
-        "others"=>0,];
 
 class logSort{
 //made by Lukáš Gregor 04.07.2020 version 1 - procedural
-//made by Lukáš Gregor 17.07.2020 version 2 - OOP, type hint, iterables
+//made by Lukáš Gregor 14.07.2020 version 2 - OOP, type hint, iterables
+//made by Lukáš Gregor 15.07.2020 version 3 - anonymous function 
+
     public function saveLog(iterable $iterable){
         $read=file_get_contents("example.log", TRUE);
         $rows= explode(PHP_EOL, $read);
@@ -26,20 +20,22 @@ class logSort{
             }
         }
     }
-    return $iterable;        
+    return $iterable;      
 }
-   
+    public function storeList(){
+        return $list=[ "error"=>0,"warning"=>0, "notice"=>0, "info"=>0, "emergency"=>0, "alert"=>0, "others"=>0,];
+    }
 }
-$a= new logSort();
-$b= $a->saveLog($list);
+$a= $c= new logSort();
+$b= $a->storeList();
+$d= $c->saveLog($b);
 
-
-//result print 
-foreach($b as $log => $count){
-        echo "$log: $count" . PHP_EOL; 
+call_user_func(function() use ($d){
+    foreach($d as $log => $count){
+        echo "$log : $count". PHP_EOL;
         echo "<br>";
-}
-
+    }
+});
 
 ?>
 
